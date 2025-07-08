@@ -1,61 +1,73 @@
 #include <stdio.h>
-#include <conio.h>
 #include <stdlib.h>
 
-#define N 5
-int stack[N];
+#define MAX 10
+
+int stack[MAX];
 int top = -1;
-void push(){
-    int x;
-    printf("Enter Data:");
-    scanf("%d", &x);
-    if(top == N-1){
-        printf("Stack Overflow!\n");
+
+void display() {
+    if(top == -1) {
+        printf("Stack is empty\n");
+        return;
+    }
+    else{
+        printf("Stack elements are: ");
+        for(int i = top; i >=0; i--) {
+            printf("%d ", stack[i]);
+        }
+    }
+    printf("\n");
+}
+
+void push(int value) {
+    if(top == MAX - 1) {
+        printf("Stack Overflow\n");
+        return;
     }
     else{
         top++;
-        stack[top] = x;
-        printf("Data Pushed: %d\n", x);
+        stack[top] = value;
+        printf("Pushed %d onto the stack\n", value);
+        display();
     }
 }
-void pop(){
-    int item;
+void pop() {
     if(top == -1){
-        printf("Stack Underflow");
+        printf("Stack Underflow\n");
+        return;
     }
     else{
-        item = stack[top];
+        printf("Poped %d from the stack\n", stack[top]);
         top--;
-        printf("Data Popped: %d\n", item);
     }
 }
-void peek(){
-    if(top == -1){
-        printf("Stack is Empty\n");
-    }
-    else{
-        printf("Top Element: %d\n", stack[top]);
-    }
-}
-void display(){
-    if(top == -1){
-        printf("Stack is empty\n");
-    }
-    else{
-        printf("Stack elements are:\n");
-        for(int i = top; i >= 0; i--){
-            printf("%d\n", stack[i]);
+void peek() {
+        if(top == -1){
+            printf("Stack underflow\n");
+            return;
+        }
+        else{
+            printf("Top element is %d\n", stack[top]);
         }
     }
-}
-int main(){
-    int choice;
-    do{
-        printf("Enter choice:\n 1. Push\n 2. Pop\n 3. Peek\n 4. Display\n 5. Exit\n");
-        scanf("%d", &choice);
-        switch(choice){
+
+int main() {
+    int value, ch;
+    do {
+        printf("1. Push\n");
+        printf("2. Pop\n");
+        printf("3. Peek\n");
+        printf("4. Display\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &ch);
+
+        switch(ch) {
             case 1:
-                push();
+                printf("Enter value to push: ");
+                scanf("%d", &value);
+                push(value);
                 break;
             case 2:
                 pop();
@@ -68,13 +80,9 @@ int main(){
                 break;
             case 5:
                 printf("Exiting...\n");
-                break;  
+                break;
             default:
                 printf("Invalid choice! Please try again.\n");
         }
-    }while (choice != 5);
-    {
-        printf("Thank you for using the stack program!\n");
-    }
-    return 0;
+    } while(ch != 5);
 }
